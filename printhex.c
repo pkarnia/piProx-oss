@@ -41,13 +41,16 @@ int main(int argc, char **argv){
             piprox_print(&prox, STDOUT_FILENO);
             rv = piprox_hidcorp1k_parse(&prox, &hidcorp1k);
             if(rv == 0){
-                printf("Card data is smaller than 5 bytes\n");
+                printf("Card data is smaller than 5 bytes. Attempting H10301 decode.\n");
+                piprox_hidH10301_t hidH10301;
+                rv = piprox_hidH10301_parse(&prox, &hidH10301);
             } else if(rv < 0){
                 printf("Parity error on parity check %d in HID Corp. 1000 decoding\n", -rv);
             } else{
                 printf("HID Corporate 1000 decoding done, facility=%d cardnum=%d\n", hidcorp1k.facility, hidcorp1k.cardnum);
             }
-        } else {
+        }
+        else {
 	    return 1;
 	}
     }

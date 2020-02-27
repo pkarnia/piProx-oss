@@ -143,3 +143,41 @@ fail:	if(f < 0){
         }
 }
 
+
+/* Attempts to parse the card data stored within the internal state following the HID H10301 26-bit open format.
+
+Returns 1 on success, 0 if the data stored within the internal state is too small to store a HID H10301 26-bit card 
+*/
+int piprox_hidH10301_parse(piprox_state_t *st, piprox_hidH10301_t *res){
+    int i,f = 0;
+    uint8_t paritya=0,parityb=0
+    if(st->card_data_len<4){
+        return 0;
+    }
+    
+    res->facility = (((uint8_t)st->card_data[3] >> 1) | ((uint8_t)st->card_data[2] << 7)) & 0x0FF;
+    res->cardnum = (((uint16_t)st->card_data[2] << 15) | ((uint16_t)st->card_data[1] << 7) | ((uint16_t)st->card_data[1] >> 1)) & 0x0FFF;
+
+    paritya = GETBIT(st->card_data,0);
+    for(i=1;i<13;i=i++){
+        paritya ^= GETBIT(st->card_data,i);
+    }
+    if(paritya == 1){
+        f=-1;
+        goto fail;
+    }
+    parityb = GETBIT(st->card_data,25);
+    for(i=13;i<25;i++){
+        parityb ^= GETBIT(st->card_data,i);    
+    }
+    if(parityb == 0){
+        f=-2;
+        goto fail;
+
+    }
+fail:	if(f < 0){
+            return f;
+        } else {
+            return 1;
+        }
+}

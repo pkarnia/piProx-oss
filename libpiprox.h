@@ -35,7 +35,12 @@ typedef struct {
 typedef struct {
 	uint16_t facility;
 	uint32_t cardnum;
-} piprox_hidcorp1k_t;  
+} piprox_hidcorp1k_t;
+
+typedef struct {
+	uint8_t facility;
+	uint16_t cardnum; 
+} piprox_hidH10301_t;
 
 /* function protos */
 
@@ -44,5 +49,6 @@ void piprox_close(piprox_state_t*);
 ssize_t piprox_read(piprox_state_t*);
 int piprox_print(piprox_state_t*, int);
 int piprox_hidcorp1k_parse(piprox_state_t*, piprox_hidcorp1k_t*);
+int piprox_hidH10301_parse(piprox_state_t*, piprox_hidH10301_t*);
 void piprox_close(piprox_state_t*);
 

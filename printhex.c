@@ -48,6 +48,7 @@ int main(int argc, char **argv){
 			printf("Card data is smaller than 4 bytes.\n");
 		} else if (rv < 0){
 			printf("Parity error on parity check %d in HID H10301 decoding\n", -rv);
+		}
      		else {
 			printf("HID H10301 decoding done, facility=%d cardnum=%d\n", hidH10301.facility, hidH10301.cardnum);
 		}

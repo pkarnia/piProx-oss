@@ -17,7 +17,7 @@
 int main(int argc, char **argv){
     const char devnode[] = "/dev/prox";
     piprox_state_t prox;
-    piprox_hidcorp1k_t hidcorp1k;
+    piprox_hidH10301_t hidcorp1k;
     int rv;
     /* open the device node and initialize the internal state */
     if(argc > 1){
@@ -39,11 +39,11 @@ int main(int argc, char **argv){
         if(rv > 0){
             /* If the read was successful, print the data and attempt a corp1k decode */
             piprox_print(&prox, STDOUT_FILENO);
-            rv = piprox_hidcorp1k_parse(&prox, &hidcorp1k);
+            rv = piprox_hidH10301_parse(&prox, &hidcorp1k);
             if(rv == 0){
                 printf("Card data is smaller than 5 bytes. Attempting H10301 decode.\n");
-                piprox_hidH10301_t hidH10301;
-                rv = piprox_hidH10301_parse(&prox, &hidH10301);
+	    	piprox_hidH10301_t hidH10301;
+	    	rv = piprox_hidH10301_parse(&prox, &hidH10301);
 		if (rv == 0){
 			printf("Card data is smaller than 4 bytes.\n");
 		} else if (rv < 0){

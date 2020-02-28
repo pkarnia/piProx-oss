@@ -51,4 +51,3 @@ int piprox_print(piprox_state_t*, int);
 int piprox_hidcorp1k_parse(piprox_state_t*, piprox_hidcorp1k_t*);
 int piprox_hidH10301_parse(piprox_state_t*, piprox_hidH10301_t*);
 void piprox_close(piprox_state_t*);
-

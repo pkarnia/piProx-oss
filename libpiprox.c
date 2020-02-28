@@ -149,6 +149,7 @@ fail:	if(f < 0){
 Returns 1 on success, 0 if the data stored within the internal state is too small to store a HID H10301 26-bit card 
 */
 int piprox_hidH10301_parse(piprox_state_t *st, piprox_hidH10301_t *res){
+    printf("Here");
     int i,f = 0;
     uint8_t paritya=0,parityb=0;
     if(st->card_data_len<4){
